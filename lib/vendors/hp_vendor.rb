@@ -6,7 +6,7 @@ module WarrantyCheck
     
     attr_reader :warranties
     
-    def initialize(sn = nil, pn = nil, country = "CA")
+    def initialize(sn, pn = nil, country = "CA")
       @sn = sn
       @pn = pn
       @country = country
