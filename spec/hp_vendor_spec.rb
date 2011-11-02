@@ -20,6 +20,12 @@ describe WarrantyCheck::HP do
     @vendor.parse_html(@vendor.get_html).class.should == Nokogiri::HTML::Document
   end
   
+  it "does not check bad warranty" do
+    bad_vendor = WarrantyCheck::HP.new("XXXXXXXXXX", "XXXXXXX")
+    bad_vendor.check
+    bad_vendor.warranties.size.should == 0
+  end
+  
   it "checks warranty" do
     @vendor.check
     @vendor.warranties.size.should == 2

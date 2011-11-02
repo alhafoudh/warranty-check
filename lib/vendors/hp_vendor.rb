@@ -18,7 +18,7 @@ module WarrantyCheck
       table = @dom.search("td td table:nth-child(3)")
       
       @warranties = []
-      table.search("tr")[1..-1].each do |elem|
+      table.search("tr")[1..-1].to_a.each do |elem|
         tds = elem.search("td")
         
         @warranty_type ||= (tds.size == 7 ? tds[0].text.strip : nil)
