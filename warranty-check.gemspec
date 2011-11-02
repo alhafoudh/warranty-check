@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'warranty-check'
-  s.version     = '0.0.3'
-  s.date        = '2011-11-01'
+  s.version     = '0.0.4'
+  s.date        = '2011-11-03'
   s.summary     = "Warranty check"
   s.description = "The library opens retrieves warrany information from various vendor websites based in provided SN/PN"
   s.authors     = ["Ahmed Al Hafoudh"]
