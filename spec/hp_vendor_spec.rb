@@ -19,7 +19,7 @@ describe WarrantyCheck::HP do
   end
   
   it "does not check bad warranty" do
-    bad_vendor = WarrantyCheck::HP.new("XXXXXXXXXX", "XXXXXXX")
+    bad_vendor = WarrantyCheck::HP.new("XXXXXXXXXX")
     bad_vendor.check
     bad_vendor.warranties.size.should == 0
   end

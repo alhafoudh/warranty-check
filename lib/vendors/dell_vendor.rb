@@ -38,7 +38,7 @@ module WarrantyCheck
     def get_html
       url = URI.parse(DELL_BASE_URL)
       res = Net::HTTP.start(url.host, url.port) do |http|
-        uri = sprintf(DELL_GET_URL, @sn, @country)
+        uri = sprintf(DELL_GET_URL, @sn)
         http.get(uri)
       end
       res.body

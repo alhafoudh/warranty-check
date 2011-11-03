@@ -2,13 +2,12 @@ module WarrantyCheck
   
   class HP < BaseVendor
     HP_BASE_URL = "http://h20000.www2.hp.com"
-    HP_GET_URL = "/bizsupport/TechSupport/WarrantyResults.jsp?nickname=&sn=%s&pn=&country=%s&lang=en&cc=us"
+    HP_GET_URL = "/bizsupport/TechSupport/WarrantyResults.jsp?nickname=&sn=%s&pn=&country=CA&lang=en&cc=us"
     
     attr_reader :warranties
     
-    def initialize(sn, country = "CA")
+    def initialize(sn)
       @sn = sn
-      @country = country
     end
   
     def check
@@ -44,7 +43,7 @@ module WarrantyCheck
     def get_html
       url = URI.parse(HP_BASE_URL)
       res = Net::HTTP.start(url.host, url.port) do |http|
-        uri = sprintf(HP_GET_URL, @sn, @country)
+        uri = sprintf(HP_GET_URL, @sn)
         http.get(uri)
       end
       res.body
