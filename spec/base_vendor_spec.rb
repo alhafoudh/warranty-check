@@ -4,8 +4,8 @@ describe WarrantyCheck::BaseVendor do
 
   it "checks warranty" do
     vendor = WarrantyCheck::BaseVendor.new
-    
-    vendor.check.should == nil
+    vendor.check
+    vendor.warranties.size.should == 0
   end
 
 end
