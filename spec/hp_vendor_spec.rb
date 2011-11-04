@@ -55,4 +55,10 @@ describe WarrantyCheck::HP do
     w2[:details][:deliverables].should  == "Initial Setup Assistance"
   end
 
+  it "checks warranty for found serial numbers" do
+    @vendor = WarrantyCheck::HP.new("CNU8270B6C")
+    @vendor.check
+    @vendor.warranties.size.should == 3
+  end
+
 end

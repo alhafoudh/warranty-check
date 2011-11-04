@@ -8,16 +8,20 @@ module WarrantyCheck
     
     def initialize(sn)
       @sn = sn
+      @url = URI.parse(HP_BASE_URL)
+      @uri = sprintf(HP_GET_URL, @sn)
     end
   
     def check
       @warranties = []
       
       parse_html get_html
-      
+
       table = @dom.search("td td table:nth-child(3)")      
       table.search("tr")[1..-1].to_a.each do |elem|
         tds = elem.search("td")
+        
+        next if !(6..7).include?(tds.count)
         
         @warranty_type ||= (tds.size == 7 ? tds[0].text.strip : nil)
         n = (tds.size == 7 ? 0 : -1)
@@ -45,7 +49,7 @@ module WarrantyCheck
             :deliverables  => details_deliverables ,
           }
         }
-        
+    
         @warranties << warranty
       end
     end
@@ -55,10 +59,8 @@ module WarrantyCheck
     end
     
     def get_html
-      url = URI.parse(HP_BASE_URL)
-      res = Net::HTTP.start(url.host, url.port) do |http|
-        uri = sprintf(HP_GET_URL, @sn)
-        http.get(uri)
+      res = Net::HTTP.start(@url.host, @url.port) do |http|
+        http.get(@uri)
       end
       res.body
     end
