@@ -11,15 +11,17 @@ module WarrantyCheck
     end
   
     def check
+      @warranties = []
+      
       parse_html get_html
       
       table = @dom.search("div table:nth-child(2)")
       
+      return if table.search("tr").to_a.count == 0
+      
       tds1 = table.search("tr").to_a[1].search("td")
       tds2 = table.search("tr").to_a[5].search("td")
-      
-      @warranties = []
-      
+
       warranty = {
         :product_id      => tds1[0].text.strip,
         :type_model      => tds1[2].text.strip,

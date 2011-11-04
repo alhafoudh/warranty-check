@@ -32,9 +32,13 @@ describe WarrantyCheck::IBM do
   end
   
   it "does not check bad warranty" do
-    bad_vendor = WarrantyCheck::DELL.new("XXXXXXX")
+    bad_vendor = WarrantyCheck::IBM.new("XXXXXXX")
     bad_vendor.check
     bad_vendor.warranties.size.should == 0
+    
+    # bad_vendor = WarrantyCheck::DELL.new("CND003107K")
+    # bad_vendor.check
+    # bad_vendor.warranties.size.should == 0
   end
 
 end

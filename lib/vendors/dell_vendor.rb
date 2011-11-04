@@ -11,11 +11,11 @@ module WarrantyCheck
     end
   
     def check
+      @warranties = []
+      
       parse_html get_html
       
       table = @dom.search("table.contract_table")
-      
-      @warranties = []
       table.search("tr")[1..-1].to_a.each do |elem|
         tds = elem.search("td")
         

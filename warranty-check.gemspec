@@ -3,10 +3,10 @@ Gem::Specification.new do |s|
   s.version     = '0.0.5'
   s.date        = '2011-11-03'
   s.summary     = "Warranty check"
-  s.description = "The library opens retrieves warrany information from various vendor websites based in provided SN/PN"
+  s.description = "The library retrieves warrany information from various vendor websites based in provided SN/PN"
   s.authors     = ["Ahmed Al Hafoudh"]
   s.email       = ["alhafoudh@freevision.sk"]
-  s.homepage    = "http://github.com/alhafoudh/warranty-check"
+  s.homepage    = "http://github.com/freevision/warranty-check"
   
   s.files       = `git ls-files`.split("\n") 
   

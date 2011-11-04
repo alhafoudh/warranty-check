@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "WarrantyCheck#classify" do
 
-  it "classifies serial numbers", :focus => true do
+  it "classifies serial numbers" do
     WarrantyCheck::classify("CND003107K").should == [WarrantyCheck::HP, WarrantyCheck::IBM]
     WarrantyCheck::classify("F34G9").should == [WarrantyCheck::DELL]
     WarrantyCheck::classify("1qmqjh1").should == [WarrantyCheck::DELL, WarrantyCheck::IBM]
