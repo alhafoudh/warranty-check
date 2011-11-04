@@ -24,11 +24,15 @@ describe WarrantyCheck::DELL do
     
     w1 = @vendor.warranties.first
     
-    w1[:description].should == "Rapid Response Depot"
-    w1[:provider].should    == "IBM"
-    w1[:start_date].should  == Time.strptime("9/1/1999", "%m/%d/%Y")
-    w1[:end_date].should    == Time.strptime("8/31/2001", "%m/%d/%Y")
-    w1[:days_left].should   == 0
+    w1[:description].should == "Rapid Response Depot (IBM)"
+    w1[:expired].should     == true
+    w1[:expire_date].should == Time.strptime("8/31/2001", "%m/%d/%Y")
+    
+    w1[:details][:description].should == "Rapid Response Depot"
+    w1[:details][:provider].should    == "IBM"
+    w1[:details][:start_date].should  == Time.strptime("9/1/1999", "%m/%d/%Y")
+    w1[:details][:end_date].should    == Time.strptime("8/31/2001", "%m/%d/%Y")
+    w1[:details][:days_left].should   == 0
   end
 
   it "does not check bad warranty" do

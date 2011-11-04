@@ -18,13 +18,25 @@ module WarrantyCheck
       table = @dom.search("table.contract_table")
       table.search("tr")[1..-1].to_a.each do |elem|
         tds = elem.search("td")
+
+        details_description = tds[0].text.strip
+        details_provider    = tds[1].text.strip
+        details_start_date  = Time.strptime(tds[2].text.strip, "%m/%d/%Y")
+        details_end_date    = Time.strptime(tds[3].text.strip, "%m/%d/%Y")
+        details_days_left   = tds[4].text.strip.to_i
         
         warranty = {
-          :description => tds[0].text.strip,
-          :provider    => tds[1].text.strip,
-          :start_date  => Time.strptime(tds[2].text.strip, "%m/%d/%Y"),
-          :end_date    => Time.strptime(tds[3].text.strip, "%m/%d/%Y"),
-          :days_left   => tds[4].text.strip.to_i
+          :description => "#{details_description} (#{details_provider})",
+          :expired => (details_days_left == 0 ? true : false),
+          :expire_date => details_end_date,
+          
+          :details => {
+            :description => details_description,
+            :provider    => details_provider   ,
+            :start_date  => details_start_date ,
+            :end_date    => details_end_date   ,
+            :days_left   => details_days_left  
+          }
         }
         
         @warranties << warranty

@@ -22,12 +22,24 @@ module WarrantyCheck
       tds1 = table.search("tr").to_a[1].search("td")
       tds2 = table.search("tr").to_a[5].search("td")
 
+      details_product_id      = tds1[0].text.strip
+      details_type_model      = tds1[2].text.strip
+      details_serial_number   = tds1[4].text.strip
+      details_location        = tds2[0].text.strip
+      details_expiration_date = Time.strptime(tds2[2].text.strip, "%Y-%m-%d")
+
       warranty = {
-        :product_id      => tds1[0].text.strip,
-        :type_model      => tds1[2].text.strip,
-        :serial_number   => tds1[4].text.strip,
-        :location        => tds2[0].text.strip,
-        :expiration_date => Time.strptime(tds2[2].text.strip, "%Y-%m-%d")
+        :description => "",
+        :expired => (details_expiration_date < Time.now ? true : false),
+        :expire_date => details_expiration_date,
+        
+        :details => {
+          :product_id      => details_product_id     ,
+          :type_model      => details_type_model     ,
+          :serial_number   => details_serial_number  ,
+          :location        => details_location       ,
+          :expiration_date => details_expiration_date,
+        }
       }
       
       @warranties << warranty

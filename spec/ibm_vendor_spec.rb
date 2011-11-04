@@ -24,21 +24,21 @@ describe WarrantyCheck::IBM do
     
     w1 = @vendor.warranties.first
       
-    w1[:product_id].should == "2511H7U"
-    w1[:type_model].should    == "2511-H7U"
-    w1[:serial_number].should  == "LR18166"
-    w1[:location].should    == "Canada"
-    w1[:expiration_date].should   == Time.strptime("2010-03-06", "%Y-%m-%d")
+    w1[:description].should == ""
+    w1[:expired].should     == true
+    w1[:expire_date].should == Time.strptime("2010-03-06", "%Y-%m-%d")
+    
+    w1[:details][:product_id].should      == "2511H7U"
+    w1[:details][:type_model].should      == "2511-H7U"
+    w1[:details][:serial_number].should   == "LR18166"
+    w1[:details][:location].should        == "Canada"
+    w1[:details][:expiration_date].should == Time.strptime("2010-03-06", "%Y-%m-%d")
   end
   
   it "does not check bad warranty" do
     bad_vendor = WarrantyCheck::IBM.new("XXXXXXX")
     bad_vendor.check
     bad_vendor.warranties.size.should == 0
-    
-    # bad_vendor = WarrantyCheck::DELL.new("CND003107K")
-    # bad_vendor.check
-    # bad_vendor.warranties.size.should == 0
   end
 
 end
