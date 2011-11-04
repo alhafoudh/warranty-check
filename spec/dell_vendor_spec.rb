@@ -34,6 +34,12 @@ describe WarrantyCheck::DELL do
     w1[:details][:end_date].should    == Time.strptime("8/31/2001", "%m/%d/%Y")
     w1[:details][:days_left].should   == 0
   end
+  
+  it "checks warranty for found serial numbers" do
+    @vendor = WarrantyCheck::DELL.new("HND96D1")
+    @vendor.check
+    @vendor.warranties.size.should == 1
+  end
 
   it "does not check bad warranty" do
     bad_vendor = WarrantyCheck::DELL.new("ZZZZZ")

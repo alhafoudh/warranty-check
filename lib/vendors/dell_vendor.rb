@@ -8,6 +8,9 @@ module WarrantyCheck
     
     def initialize(sn)
       @sn = sn
+      
+      @url = URI.parse(DELL_BASE_URL)
+      @uri = sprintf(DELL_GET_URL, @sn)
     end
   
     def check
@@ -48,12 +51,25 @@ module WarrantyCheck
     end
     
     def get_html
+      res = Net::HTTP.start(@url.host, @url.port) do |http|
+        http.get(@uri)
+      end
+      
+      if (res.code == "302")
+        @uri = res["location"]
+        get_html
+      else
+        res.body
+      end
+    end
+    
+    def get_res
       url = URI.parse(DELL_BASE_URL)
       res = Net::HTTP.start(url.host, url.port) do |http|
         uri = sprintf(DELL_GET_URL, @sn)
         http.get(uri)
       end
-      res.body
+      res
     end
   
   end
