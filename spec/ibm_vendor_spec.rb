@@ -2,20 +2,18 @@ require 'spec_helper'
 
 describe WarrantyCheck::IBM do
 
-  before(:each) do
+  before(:all) do
     @sn = "LR18166"
     
     @vendor = WarrantyCheck::IBM.new(@sn)
   end
 
   it "gets html" do
-    html = @vendor.get_html
-    
-    html.should =~ Regexp.new(@sn)
+    @vendor.html =~ Regexp.new(@sn)
   end
 
   it "parses html" do
-    @vendor.parse_html(@vendor.get_html).class.should == Nokogiri::HTML::Document
+    @vendor.dom.class.should == Nokogiri::HTML::Document
   end
 
   it "checks warranty" do

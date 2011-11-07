@@ -2,20 +2,18 @@ require 'spec_helper'
 
 describe WarrantyCheck::HP do
 
-  before(:each) do
+  before(:all) do
     @sn = "CND003107K"
     
     @vendor = WarrantyCheck::HP.new(@sn)
   end
 
   it "gets html" do
-    html = @vendor.get_html
-    
-    html.should =~ Regexp.new(@sn)
+    @vendor.html =~ Regexp.new(@sn)
   end
   
   it "parses html" do
-    @vendor.parse_html(@vendor.get_html).class.should == Nokogiri::HTML::Document
+    @vendor.dom.class.should == Nokogiri::HTML::Document
   end
   
   it "does not check bad warranty" do
@@ -56,9 +54,9 @@ describe WarrantyCheck::HP do
   end
 
   it "checks warranty for found serial numbers" do
-    @vendor = WarrantyCheck::HP.new("CNU8270B6C")
-    @vendor.check
-    @vendor.warranties.size.should == 3
+    custom_vendor = WarrantyCheck::HP.new("CNU8270B6C")
+    custom_vendor.check
+    custom_vendor.warranties.size.should == 3
   end
 
 end

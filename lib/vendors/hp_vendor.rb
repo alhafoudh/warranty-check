@@ -1,23 +1,19 @@
 module WarrantyCheck
   
   class HP < BaseVendor
-    HP_BASE_URL = "http://h20000.www2.hp.com"
-    HP_GET_URL = "/bizsupport/TechSupport/WarrantyResults.jsp?nickname=&sn=%s&pn=&country=CA&lang=en&cc=us"
-    
-    attr_reader :warranties
-    
-    def initialize(sn)
-      @sn = sn
-      @url = URI.parse(HP_BASE_URL)
-      @uri = sprintf(HP_GET_URL, @sn)
+      
+    def service_base_url
+      "http://h20000.www2.hp.com"
     end
-  
+    
+    def service_uri
+      "/bizsupport/TechSupport/WarrantyResults.jsp?nickname=&sn=%s&pn=&country=CA&lang=en&cc=us"
+    end
+      
     def check
       @warranties = []
-      
-      parse_html get_html
 
-      table = @dom.search("td td table:nth-child(3)")      
+      table = dom.search("td td table:nth-child(3)")      
       table.search("tr")[1..-1].to_a.each do |elem|
         tds = elem.search("td")
         
@@ -54,17 +50,6 @@ module WarrantyCheck
       end
     end
     
-    def parse_html(html)      
-      @dom = Nokogiri::HTML(html)
-    end
-    
-    def get_html
-      res = Net::HTTP.start(@url.host, @url.port) do |http|
-        http.get(@uri)
-      end
-      res.body
-    end
-  
   end
   
 end
