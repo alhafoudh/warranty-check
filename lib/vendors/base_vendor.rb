@@ -1,6 +1,7 @@
 require 'net/http'
 require 'uri'
 require 'nokogiri'
+require 'json'
 require 'time'
 
 require 'pry'
@@ -49,9 +50,10 @@ module WarrantyCheck
     private # -----------
     
     def get_html
-      res = Net::HTTP.start(url.host, url.port) do |http|
-        http.get(uri)
-      end
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true if url.port == 443
+      
+      res = http.get(uri)
     
       if (res.code == "302")
         @uri = res["location"]
