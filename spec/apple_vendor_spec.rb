@@ -3,9 +3,9 @@ require 'spec_helper'
 describe WarrantyCheck::APPLE, :focus => true do
 
   before(:all) do
-    # @sn = "W88530XF1GK"
+    @sn = "W88530XF1GK"
     # @sn = "8211276UA4S"
-    @sn = "CQ12905CZ38"
+    # @sn = "CQ12905CZ38"
     
     @vendor = WarrantyCheck::APPLE.new(@sn)
   end
@@ -18,11 +18,11 @@ describe WarrantyCheck::APPLE, :focus => true do
     @vendor.json.class.should == Hash
   end
 
-  # it "does not check bad warranty" do
-  #   bad_vendor = WarrantyCheck::APPLE.new("XXXXXXXXXX")
-  #   bad_vendor.check
-  #   bad_vendor.warranties.size.should == 0
-  # end
+  it "does not check bad warranty" do
+    bad_vendor = WarrantyCheck::APPLE.new("XXXXXXXXXX")
+    bad_vendor.check
+    bad_vendor.warranties.size.should == 0
+  end
 
   it "checks warranty" do
     @vendor.check
@@ -30,12 +30,12 @@ describe WarrantyCheck::APPLE, :focus => true do
   
     w1, w2 = @vendor.warranties
     
-    w1[:description].should == "Telephone Technical Support"
+    w1[:description].should == "MacBook Pro (15-inch, Late 2008) - Telephone Technical Support"
     w1[:expired].should     == true
     w1[:expire_date].should == nil
   
   
-    w2[:description].should == "Repairs and Service Coverage"
+    w2[:description].should == "MacBook Pro (15-inch, Late 2008) - Repairs and Service Coverage"
     w2[:expired].should     == true
     w2[:expire_date].should == nil
   end
@@ -47,12 +47,12 @@ describe WarrantyCheck::APPLE, :focus => true do
 
     w1, w2 = custom_vendor.warranties
     
-    w1[:description].should == "Telephone Technical Support"
+    w1[:description].should == "iPad - Telephone Technical Support"
     w1[:expired].should     == true
     w1[:expire_date].should == nil
   
   
-    w2[:description].should == "Repairs and Service Coverage"
+    w2[:description].should == "iPad - Repairs and Service Coverage"
     w2[:expired].should     == true
     w2[:expire_date].should == nil
   end
