@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    warranty-check (1.0.0)
+    warranty-check (1.1.1)
       nokogiri
 
 GEM
