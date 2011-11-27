@@ -22,14 +22,14 @@ module WarrantyCheck
         @warranties << {
           :description => sprintf("%s - %s", json["PROD_DESCR"].strip, json["PH_SUPPORT_COVERAGE_SUBHEADER"].split(':').first.strip),
           :expired => json["PH_SUPPORT_COVERAGE_SUBHEADER"].split(':').last.strip == "Expired",
-          :expire_date => nil,
+          :expire_date => (" " * 10),
           :details => json
         }
       
         @warranties << {
           :description => sprintf("%s - %s", json["PROD_DESCR"].strip, json["HW_REPAIR_COVERAGE_SUBHEADER"].split(':').first.strip),
           :expired => json["HW_REPAIR_COVERAGE_SUBHEADER"].split(':').last.strip == "Expired",
-          :expire_date => nil,
+          :expire_date => (" " * 10),
           :details => json
         }
         
