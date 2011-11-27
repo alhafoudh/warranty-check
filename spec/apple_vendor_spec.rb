@@ -32,12 +32,12 @@ describe WarrantyCheck::APPLE, :focus => true do
     
     w1[:description].should == "MacBook Pro (15-inch, Late 2008) - Telephone Technical Support"
     w1[:expired].should     == true
-    w1[:expire_date].should == nil
+    w1[:expire_date].should == (" " * 10)
   
   
     w2[:description].should == "MacBook Pro (15-inch, Late 2008) - Repairs and Service Coverage"
     w2[:expired].should     == true
-    w2[:expire_date].should == nil
+    w2[:expire_date].should == (" " * 10)
   end
 
   it "checks warranty for other serial numbers" do
@@ -49,12 +49,12 @@ describe WarrantyCheck::APPLE, :focus => true do
     
     w1[:description].should == "iPad - Telephone Technical Support"
     w1[:expired].should     == true
-    w1[:expire_date].should == nil
+    w1[:expire_date].should == (" " * 10)
   
   
     w2[:description].should == "iPad - Repairs and Service Coverage"
     w2[:expired].should     == true
-    w2[:expire_date].should == nil
+    w2[:expire_date].should == (" " * 10)
   end
 
 end
