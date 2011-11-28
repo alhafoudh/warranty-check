@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WarrantyCheck::APPLE, :focus => true do
+describe WarrantyCheck::APPLE do
 
   before(:all) do
     @sn = "W88530XF1GK"
