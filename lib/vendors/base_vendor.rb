@@ -31,6 +31,10 @@ module WarrantyCheck
       "/%s"
     end
     
+    def http_method
+      :get
+    end
+    
     def url
       @url ||= URI.parse(service_base_url)
     end
@@ -52,8 +56,14 @@ module WarrantyCheck
     def get_html
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true if url.port == 443
-      
-      res = http.get(uri)
+
+      res = case http_method
+        when :get
+          http.get(uri)
+        when :post
+          u = URI.parse(uri)
+          http.post(u.path, u.query)
+      end
     
       if (res.code == "302")
         @uri = res["location"]
