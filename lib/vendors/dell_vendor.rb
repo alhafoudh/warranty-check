@@ -19,8 +19,8 @@ module WarrantyCheck
 
         details_description = tds[0].text.strip
         details_provider    = tds[1].text.strip
-        details_start_date  = Time.strptime(tds[2].text.strip, "%m/%d/%Y")
-        details_end_date    = Time.strptime(tds[3].text.strip, "%m/%d/%Y")
+        details_start_date  = Date.strptime(tds[2].text.strip, "%m/%d/%Y")
+        details_end_date    = Date.strptime(tds[3].text.strip, "%m/%d/%Y")
         details_days_left   = tds[4].text.strip.to_i
         
         warranty = {

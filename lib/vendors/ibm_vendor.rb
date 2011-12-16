@@ -24,7 +24,7 @@ module WarrantyCheck
       details_type_model      = tds1[2].text.strip
       details_serial_number   = tds1[4].text.strip
       details_location        = tds2[0].text.strip
-      details_expiration_date = Time.strptime(tds2[2].text.strip, "%Y-%m-%d")
+      details_expiration_date = Date.strptime(tds2[2].text.strip, "%Y-%m-%d")
 
       warranty = {
         :description => "",

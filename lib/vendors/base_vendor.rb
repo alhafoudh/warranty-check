@@ -3,7 +3,7 @@ require 'uri'
 require 'nokogiri'
 require 'json'
 require 'time'
-
+require 'date'
 require 'pry'
 
 module WarrantyCheck

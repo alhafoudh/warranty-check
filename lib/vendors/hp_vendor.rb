@@ -21,11 +21,12 @@ module WarrantyCheck
         
         @warranty_type ||= (tds.size == 7 ? tds[0].text.strip : nil)
         n = (tds.size == 7 ? 0 : -1)
-
+        puts "Start: #{tds[n+2].text.strip}"
+        puts "Start: #{tds[n+3].text.strip}"
         details_warranty_type = @warranty_type
         details_service_type  = tds[n+1].text.strip
-        details_start_date    = Time.strptime(tds[n+2].text.strip, "%d %b %Y")
-        details_end_date      = Time.strptime(tds[n+3].text.strip, "%d %b %Y")
+        details_start_date    = Date.strptime(tds[n+2].text.strip, "%d %b %Y")
+        details_end_date      = Date.strptime(tds[n+3].text.strip, "%d %b %Y")
         details_status        = tds[n+4].text.strip
         details_service_level = tds[n+5].text.strip
         details_deliverables  = tds[n+6].text.strip
