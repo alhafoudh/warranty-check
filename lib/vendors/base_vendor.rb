@@ -47,6 +47,13 @@ module WarrantyCheck
       @html ||= get_html
     end
     
+    def warrantystatus
+        # return true when at least one warranty is still valid
+	@warranties.each do | w |
+		return true if w.expired == false
+	end
+    end
+    
     def dom
       @dom ||= Nokogiri::HTML(html)
     end
