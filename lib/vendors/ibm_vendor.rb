@@ -26,19 +26,16 @@ module WarrantyCheck
       details_location        = tds2[0].text.strip
       details_expiration_date = Date.strptime(tds2[2].text.strip, "%Y-%m-%d")
 
-      warranty = {
-        :description => "",
-        :expired => (details_expiration_date < Time.now ? true : false),
-        :expire_date => details_expiration_date,
-        
-        :details => {
-          :product_id      => details_product_id     ,
-          :type_model      => details_type_model     ,
-          :serial_number   => details_serial_number  ,
-          :location        => details_location       ,
-          :expiration_date => details_expiration_date,
-        }
-      }
+      warranty = Warranty.new()
+      warranty.description = ""
+      warranty.expired = (details_expiration_date < Time.now ? true : false)
+      warranty.expire_date = details_expiration_date
+      warranty.product_id      = details_product_id     ,
+      warranty.type_model      = details_type_model     ,
+      warranty.serial_number   = details_serial_number  ,
+      warranty.location        = details_location       ,
+      warranty.expiration_date = details_expiration_date,
+      
       
       @warranties << warranty
     end

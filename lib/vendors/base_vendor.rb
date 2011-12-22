@@ -1,4 +1,5 @@
 require 'net/http'
+require 'net/https'
 require 'uri'
 require 'nokogiri'
 require 'json'
@@ -48,10 +49,12 @@ module WarrantyCheck
     end
     
     def warrantystatus
-        # return true when at least one warranty is still valid
-	@warranties.each do | w |
-		return true if w.expired == false
-	end
+      # return true when at least one warranty is still valid
+      validwarranty = false
+      @warranties.each do | w |
+        validwarranty = true if w.expired == false
+      end
+      return validwarranty
     end
     
     def dom
