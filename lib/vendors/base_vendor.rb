@@ -1,9 +1,10 @@
 require 'net/http'
+require 'net/https'
 require 'uri'
 require 'nokogiri'
 require 'json'
 require 'time'
-
+require 'date'
 require 'pry'
 
 module WarrantyCheck
@@ -45,6 +46,15 @@ module WarrantyCheck
     
     def html
       @html ||= get_html
+    end
+    
+    def warrantystatus
+      # return true when at least one warranty is still valid
+      validwarranty = false
+      @warranties.each do | w |
+        validwarranty = true if w.expired == false
+      end
+      return validwarranty
     end
     
     def dom

@@ -18,21 +18,20 @@ module WarrantyCheck
       @warranties = []
       
       if json["ERROR_CODE"].nil?
-
-        @warranties << {
-          :description => sprintf("%s - %s", json["PROD_DESCR"].strip, json["PH_SUPPORT_COVERAGE_SUBHEADER"].split(':').first.strip),
-          :expired => json["PH_SUPPORT_COVERAGE_SUBHEADER"].split(':').last.strip == "Expired",
-          :expire_date => (" " * 10),
-          :details => json
-        }
-      
-        @warranties << {
-          :description => sprintf("%s - %s", json["PROD_DESCR"].strip, json["HW_REPAIR_COVERAGE_SUBHEADER"].split(':').first.strip),
-          :expired => json["HW_REPAIR_COVERAGE_SUBHEADER"].split(':').last.strip == "Expired",
-          :expire_date => (" " * 10),
-          :details => json
-        }
-        
+        w1 = Warranty.new()
+        w1.description = sprintf("%s - %s", json["PROD_DESCR"].strip,
+                                 json["PH_SUPPORT_COVERAGE_SUBHEADER"].split(':').first.strip)
+        w1.expired = json["PH_SUPPORT_COVERAGE_SUBHEADER"].split(':').last.strip == "Expired"
+        w1.expire_date = (" " * 10)
+        w1.details = json
+        @warranties << w1
+        w2 = Warranty.new()
+        w2.description = sprintf("%s - %s", json["PROD_DESCR"].strip,
+                                 json["HW_REPAIR_COVERAGE_SUBHEADER"].split(':').first.strip)
+        w2.expired = json["HW_REPAIR_COVERAGE_SUBHEADER"].split(':').last.strip == "Expired"
+        w2.expire_date = (" " * 10)
+        w2.details = json
+        @warranties << w2
       end
     end
     

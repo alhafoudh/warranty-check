@@ -21,30 +21,28 @@ module WarrantyCheck
         
         @warranty_type ||= (tds.size == 7 ? tds[0].text.strip : nil)
         n = (tds.size == 7 ? 0 : -1)
-
-        details_warranty_type = @warranty_type
-        details_service_type  = tds[n+1].text.strip
-        details_start_date    = Time.strptime(tds[n+2].text.strip, "%d %b %Y")
-        details_end_date      = Time.strptime(tds[n+3].text.strip, "%d %b %Y")
-        details_status        = tds[n+4].text.strip
-        details_service_level = tds[n+5].text.strip
-        details_deliverables  = tds[n+6].text.strip
+        details_warranty_type = @warranty_type.gsub(/[\t\n\r]+/, "")
+        details_service_type  = tds[n+1].text.strip.gsub(/[\t\n\r]+/, "")
+        details_start_date    = Date.strptime(tds[n+2].text.strip, "%d %b %Y")
+        details_end_date      = Date.strptime(tds[n+3].text.strip, "%d %b %Y")
+        details_status        = tds[n+4].text.strip.gsub(/\s+/, "")
+        details_service_level = tds[n+5].text.strip.gsub(/\st+/, "")
+        details_deliverables  = tds[n+6].text.strip.gsub(/[\t\n\r]+/, "")
         
-        warranty = {
-          :description => "#{details_warranty_type} - #{details_service_type}",
-          :expired => (details_status == "Expired" ? true : false),
-          :expire_date => details_end_date,
+        # create new warranty object
+        
+          warranty = Warranty.new()
+          warranty.description = "#{details_warranty_type} - #{details_service_type}"
+          warranty.expired = (details_status == "Expired" ? true : false)
+          warranty.warranty_type = details_warranty_type
+          warranty.service_type  = details_service_type 
+          warranty.start_date    = details_start_date   
+          warranty.end_date      = details_end_date     
+          warranty.status        = details_status       
+          warranty.service_level = details_service_level
+          warranty.deliverables  = details_deliverables 
           
-          :details => {
-            :warranty_type => details_warranty_type,
-            :service_type  => details_service_type ,
-            :start_date    => details_start_date   ,
-            :end_date      => details_end_date     ,
-            :status        => details_status       ,
-            :service_level => details_service_level,
-            :deliverables  => details_deliverables ,
-          }
-        }
+        
     
         @warranties << warranty
       end

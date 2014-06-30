@@ -19,23 +19,18 @@ module WarrantyCheck
 
         details_description = tds[0].text.strip
         details_provider    = tds[1].text.strip
-        details_start_date  = Time.strptime(tds[2].text.strip, "%m/%d/%Y")
-        details_end_date    = Time.strptime(tds[3].text.strip, "%m/%d/%Y")
+        details_start_date  = Date.strptime(tds[2].text.strip, "%m/%d/%Y")
+        details_end_date    = Date.strptime(tds[3].text.strip, "%m/%d/%Y")
         details_days_left   = tds[4].text.strip.to_i
         
-        warranty = {
-          :description => "#{details_description} (#{details_provider})",
-          :expired => (details_days_left == 0 ? true : false),
-          :expire_date => details_end_date,
-          
-          :details => {
-            :description => details_description,
-            :provider    => details_provider   ,
-            :start_date  => details_start_date ,
-            :end_date    => details_end_date   ,
-            :days_left   => details_days_left  
-          }
-        }
+        warranty = Warranty.new()
+        warranty.description = "#{details_description} (#{details_provider})"
+        warranty.expired = (details_days_left == 0 ? true : false)
+        warranty.expire_date = details_end_date
+        warranty.provider    = details_provider   
+        warranty.start_date  = details_start_date 
+        warranty.end_date    = details_end_date   
+        warranty.days_left   = details_days_left  
         
         @warranties << warranty
       end

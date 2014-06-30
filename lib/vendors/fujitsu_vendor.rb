@@ -26,14 +26,11 @@ module WarrantyCheck
 
       return if td1 =~ /^Error/
 
-      expiration_date = Time.strptime(td3, "%d/%m/%Y")
-      
-      warranty = {
-        :description => sprintf("%s - %s", td1, td2),
-        :expired => (expiration_date < Time.now ? true : false),
-        :expire_date => expiration_date
-      }
-      
+      expiration_date = Date.strptime(td3, "%d/%m/%Y")
+      warranty = Warranty.new()
+      warranty.description = sprintf("%s - %s", td1, td2)
+      warranty.expired = (expiration_date < Time.now ? true : false)
+      warranty.expire_date = expiration_date
       @warranties << warranty
     end
   
